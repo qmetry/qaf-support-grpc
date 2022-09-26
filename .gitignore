@@ -1,0 +1,10 @@
+/bin/
+/releases
+/maven
+/build/
+/repository/
+/.settings
+/test-output/
+/img
+/dependencies
+/.DS_Store

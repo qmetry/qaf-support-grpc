@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+Copyright (c) 2019 Infostretch Corporation
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+For any inquiry or need additional information, please contact support-qaf@infostretch.com
+-->
+
+
+<project basedir="." default="build" name="QAF Web Services Support" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<get src="https://raw.githubusercontent.com/qmetry/qaf-parent/master/common-build-tasks.xml" dest="../common-build-tasks.xml" skipexisting="true"/>
+
+	<target name="compile" depends="init">
+		<taskdef classpathref="build.classpath" resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties" />
+		  <echo>Java/JVM version: ${ant.java.version}</echo> 
+		   <echo>Java/JVM detail version: ${java.version}</echo> 
+		<echo level="info">--- compile (start) ---</echo>
+		<iajc source="${source}" target="${target}" showweaveinfo="true" verbose="false" destdir="${bin.dir}" debug="false" aspectpathref="build.classpath">
+			<inpath>
+				<pathelement location="${src.dir}" />
+			</inpath>
+			<sourceroots>
+				<pathelement location="${src.dir}" />
+			</sourceroots>
+			<classpath refid="build.classpath">
+			</classpath>
+		</iajc>
+		<echo level="info">--- compile (finished) ---</echo>
+	</target>
+
+	<!-- ================================= target: build ================================= -->
+	<target name="build" depends="make-jar, gendoc,gensource" description="build framework, generate docs">
+	</target>
+	<target name="make-jar" depends="clean, compile" description="build basic version">
+
+		<mkdir dir="${dist.dir}" />
+		<!-- All - core + testNG + step -->
+		<jar destfile="${dist.dir}/${artifact.name}.jar" basedir="${bin.dir}" includes="**/*.*">
+			<metainf dir="." includes="LICENSE.txt,NOTICE.txt" />
+			<manifest>
+				<attribute name="Vendor" value="Infostretch Corp." />
+				<attribute name="Built-By" value="${user.name}" />
+				<section name="Build-Info">
+					<attribute name="qaf-Build-Time" value="${build.timestamp}" />
+					<!-- Information about the program itself -->
+					<attribute name="qaf-Version" value="${version-num}" />
+					<attribute name="qaf-Revision" value="${build-num}" />
+					<attribute name="qaf-Type" value="${artifact.name}" />
+				</section>
+			</manifest>
+			<metainf dir="${src.dir}" includes="**/aop.xml" />
+		</jar>
+	</target>
+
+	<target name="gendoc" depends="init" description="generate documentation">
+		<delete dir="${dist.dir}/docs" />
+
+		<mkdir dir="${dist.dir}/docs" />
+		<javadoc access="protected" additionalparam="-Xdoclint:none" sourcepath="${src.dir}" packagenames="com.qmetry.**.*" destdir="${dist.dir}/docs" 
+			verbose="false" author="true" version="true" use="true" windowtitle="QAF Web Services Support - ${version-num}.${build-num}">
+			<doctitle>
+				<![CDATA[<h1>QAF Web Services Support - ${version-num}.${build-num}</h1>]]>
+			</doctitle>
+		<bottom>
+			<![CDATA[<i>Copyright &#169; 2000 Infostretch Corp.</i>]]>
+			</bottom>
+	<classpath refid="build.classpath" />
+	<tag name="todo" scope="all" description="To do:" />
+</javadoc>
+<jar compress="true" destfile="${dist.dir}/${artifact.name}-javadoc.jar" basedir="${dist.dir}/docs" />
+<delete dir="${dist.dir}/docs">
+</delete>
+</target>
+
+<import file="../common-build-tasks.xml" optional="false" />
+
+</project>

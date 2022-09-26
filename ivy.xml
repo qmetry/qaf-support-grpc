@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright (c) 2019 Infostretch Corporation
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-->
+<ivy-module version="2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="com.qmetry" module="qaf-support-grpc" status="integration">
+	</info>
+
+	<configurations>
+        <conf name="compile"  description="Required to compile application"/>
+        <conf name="runtime"  description="Additional run-time dependencies" extends="compile"/>
+        <conf name="test"     description="Required for test only" extends="runtime"/>
+        <conf name="provided" description="Needed for compile, but will be present on the target platform."/>        
+    </configurations>
+    
+	<dependencies>
+		<dependency org="com.qmetry" name="qaf" rev="latest.integration" conf="compile->default">
+				<exclude org="org.seleniumhq.selenium"/>
+		</dependency>
+		<dependency org="com.qmetry" name="qaf-support-ws" rev="latest.integration" conf="compile->default">
+				<artifact name="qaf-support-ws" type="jar"></artifact>
+		</dependency>
+		<dependency org="org.aspectj" name="aspectjtools" rev="1.9.5" >
+			<artifact name="aspectjtools" type="jar"></artifact>
+		</dependency>
+		<!-- 		-->
+		
+		
+		<dependency org="io.grpc" name="grpc-protobuf" rev="1.48.1" conf="compile->default"/>
+		<dependency org="io.grpc" name="grpc-testing" rev="1.48.1" conf="compile->default"/>
+		<dependency org="io.grpc" name="grpc-all" rev="1.48.1" conf="compile->default"/>
+		<dependency org="com.github.os72" name="protoc-jar" rev="3.2.0"  conf="compile->default"/>
+		<dependency org="com.google.oauth-client" name="google-oauth-client" rev="1.30.1"/>
+		<dependency org="com.beust" name="jcommander" rev="1.72" conf="compile->default"/>
+		<dependency org="com.google.truth" name="truth" rev="0.28"/>
+
+	</dependencies>
+</ivy-module>
