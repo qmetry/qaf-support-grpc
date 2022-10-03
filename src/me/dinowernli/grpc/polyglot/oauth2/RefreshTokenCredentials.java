@@ -12,7 +12,7 @@ import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.http.BasicAuthentication;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.common.annotations.VisibleForTesting;
@@ -85,7 +85,7 @@ public class RefreshTokenCredentials extends OAuth2Credentials {
         OauthClient oauthClient, String refreshTokenSecret, String tokenEndpoint) {
       RefreshTokenRequest result = new RefreshTokenRequest(
           new NetHttpTransport(),
-          new JacksonFactory(),
+          GsonFactory.getDefaultInstance(),
           new GenericUrl(tokenEndpoint),
           refreshTokenSecret);
       result.setClientAuthentication(
