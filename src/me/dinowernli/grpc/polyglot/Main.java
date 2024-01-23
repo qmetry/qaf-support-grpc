@@ -12,7 +12,7 @@ import me.dinowernli.grpc.polyglot.protobuf.ProtocInvoker;
 import me.dinowernli.grpc.polyglot.protobuf.ProtocInvoker.ProtocInvocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.bridge.SLF4JBridgeHandler;
+//import org.slf4j.bridge.SLF4JBridgeHandler;
 import polyglot.ConfigProto.Configuration;
 import polyglot.ConfigProto.ProtoConfiguration;
 
@@ -22,7 +22,7 @@ public class Main {
 
   public static void main(String[] args) {
     // Fix the logging setup.
-    setupJavaUtilLogging();
+    //setupJavaUtilLogging();
 
     logger.info("Polyglot version: " + VERSION);
 
@@ -89,10 +89,10 @@ public class Main {
     }
   }
 
-  /** Redirects the output of standard java loggers to our slf4j handler. */
+  /** Redirects the output of standard java loggers to our slf4j handler. 
   private static void setupJavaUtilLogging() {
     LogManager.getLogManager().reset();
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
-  }
+  }*/
 }
