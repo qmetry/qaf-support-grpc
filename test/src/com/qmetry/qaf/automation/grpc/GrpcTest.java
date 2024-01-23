@@ -20,10 +20,10 @@ public class GrpcTest {
 		ConfigurationManager.getBundle().setProperty("grpc.proto_discovery_root", "proto");
 		// --endpoint=grpcb.in:9000","--full_method=grpcbin.GRPCBin/Index
 		doGrpcClientCall("{'baseurl':'grpcb.inn:9000','endpoint':'grpcbin.GRPCBin/Index'}", ImmutableMap.of());
-		responseStatusIs("UNAVAILABLE");
+		grpcResponseStatusIs("UNAVAILABLE");
 		
 		doGrpcClientCall("{'baseurl':'grpcb.in:9000','endpoint':'grpcbin.GRPCBin/Index'}", ImmutableMap.of());
-		responseStatusIs("OK");
+		grpcResponseStatusIs("OK");
 		
 		System.out.println("Error:: " + doGrpcClientCall("{'baseurl':'grpcb.in:9000','endpoint':'grpcbin.GRPCBin/Index'}", ImmutableMap.of()).getError());
 		System.out.println(doGrpcClientCall("{'baseurl':'grpcb.in:9000','endpoint':'grpcbin.GRPCBin/HeadersUnary'}", ImmutableMap.of()).getMessageBody());
@@ -31,7 +31,7 @@ public class GrpcTest {
 
 		doGrpcClientCall("{'baseurl':'grpcb.in:9000','endpoint':'grpcbin.GRPCBin/SpecificError','body':\"{'code':1,'reason':'CANCELLED'}\"}", ImmutableMap.of());
 
-		responseStatusIs("CANCELLED");
+		grpcResponseStatusIs("CANCELLED");
 
 	}
 
